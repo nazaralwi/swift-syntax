@@ -473,11 +473,14 @@ public let EXPR_NODES: [Node] = [
     documentation: """
       A parameter in a closure's parenthesized parameter list, which can include type annotations.
 
+      For example, in:
       ```swift
       { (x: Int, y: Int) -> Int in
         return x + y
       }
       ```
+
+      `x: Int` and `y: Int` are each represented by a `ClosureParameterSyntax`.
       """,
     parserFunction: "parseClosureParameter",
     traits: ["WithTrailingComma", "WithAttributes", "WithModifiers"],
@@ -546,9 +549,12 @@ public let EXPR_NODES: [Node] = [
     documentation: """
       The parenthesized parameter clause of a closure, enclosing typed parameters.
 
+      For example, in:
       ```swift
       { (x: Int, y: Int) in x + y }
       ```
+
+      `(x: Int, y: Int)` is represented by `ClosureParameterClauseSyntax`.
       """,
     traits: [
       "Parenthesized"
@@ -585,11 +591,14 @@ public let EXPR_NODES: [Node] = [
     documentation: """
       A closure expression.
 
+      For example, in:
       ```swift
       let doubled = numbers.map { [weak self] x -> Int in
         return x * 2
       }
       ```
+
+      `{ [weak self] x -> Int in return x * 2 }` is represented by `ClosureExprSyntax.`
       """,
     traits: [
       "Braced",
@@ -686,7 +695,7 @@ public let EXPR_NODES: [Node] = [
       }
       ```
 
-      Everything before the `in` keyword is part of the closure signature.
+      Everything after `{` and up to `in` keyword is part of the closure signature.
       """,
     traits: [
       "WithAttributes"
